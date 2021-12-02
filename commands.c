@@ -19,6 +19,7 @@
 #include "sxiv.h"
 #define _IMAGE_CONFIG
 #define _VIDEO_CONFIG
+#define _MAPPINGS_CONFIG
 #include "config.h"
 
 #include <stdlib.h>
@@ -53,19 +54,6 @@ extern int markidx;
 extern int prefix;
 extern bool extprefix;
 
-bool cg_quit(arg_t _)
-{
-	unsigned int i;
-
-	if (options->to_stdout && markcnt > 0) {
-		for (i = 0; i < filecnt; i++) {
-			if (files[i].flags & FF_MARK)
-				printf("%s\n", files[i].name);
-		}
-	}
-	exit(EXIT_SUCCESS);
-}
-
 bool cg_switch_mode(arg_t _)
 {
 	if (mode == MODE_IMAGE) {
@@ -84,6 +72,21 @@ bool cg_switch_mode(arg_t _)
 		mode = MODE_IMAGE;
 	}
 	return true;
+}
+
+bool cg_quit(arg_t _)
+{
+	if (QUIT_TO_THUMBS && mode == MODE_IMAGE)
+		return cg_switch_mode(0);
+
+	unsigned int i;
+	if (options->to_stdout && markcnt > 0) {
+		for (i = 0; i < filecnt; i++) {
+			if (files[i].flags & FF_MARK)
+				printf("%s\n", files[i].name);
+		}
+	}
+	exit(EXIT_SUCCESS);
 }
 
 bool cg_toggle_fullscreen(arg_t _)

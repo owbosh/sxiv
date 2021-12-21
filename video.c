@@ -11,7 +11,7 @@ extern magic_t magic;
 
 const char *video_types[] = {
   ".mp4", ".3gp", ".mkv", ".avi",
-  ".flv", ".mov", ".mwv"
+  ".flv", ".mov", ".mwv", ".gif"
 };
 
 bool is_video(const char *file) {

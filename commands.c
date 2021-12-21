@@ -67,6 +67,11 @@ bool cg_switch_mode(arg_t _)
 		}
 		tns.dirty = true;
 		mode = MODE_THUMB;
+	} else if (PLAY_FROM_THUMB && is_video(files[fileidx].path)) {
+		char *cmd = (char *) malloc(strlen(files[fileidx].path) + strlen(VIDEO_CMD) + 1);
+		sprintf(cmd, VIDEO_CMD, files[fileidx].path);
+    	system(cmd);
+		return true;
 	} else {
 		load_image(fileidx);
 		mode = MODE_IMAGE;
@@ -309,8 +314,7 @@ bool ci_navigate_frame(arg_t d)
 bool ci_toggle_animation(arg_t _)
 {
   if (files[fileidx].video_thumb != NULL) {
-    char *cmd = (char *) malloc(strlen(files[fileidx].path)
-                                + strlen(VIDEO_CMD) + 1);
+    char *cmd = (char *) malloc(strlen(files[fileidx].path) + strlen(VIDEO_CMD) + 1);
     sprintf(cmd, VIDEO_CMD, files[fileidx].path);
     system(cmd);
     return false;

@@ -85,7 +85,7 @@ install: all
 	cp exec/* $(DESTDIR)$(PREFIX)/share/sxiv/exec/
 	chmod 755 $(DESTDIR)$(PREFIX)/share/sxiv/exec/*
 	cp -f sxiv.desktop $(DESTDIR)$(APP_PREFIX)
-	update-desktop-database
+	update-desktop-database || update-desktop-database ~/.local/share/applications/
 
 uninstall:
 	@echo "REMOVE bin/sxiv"

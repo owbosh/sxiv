@@ -68,17 +68,28 @@ enum {
 static const int thumb_sizes[] = { 32, 64, 96, 128, 160 };
 
 /* thumbnail size at startup, index into thumb_sizes[]: */
-static const int THUMB_SIZE = 3;
+static const int THUMB_SIZE = 4;
+
+/* border color of the currently highlighted thumbnail.
+ * 'long' type format: take the hex value of the color and prepend 0x00
+ */
+static const long THUMB_HIGHLIGHT_COL = 0x00BD93F9;
 
 #endif
 #ifdef _VIDEO_CONFIG
-/*
- * command used to play videos
- */
+
+/* command used to play videos */
 static const char *VIDEO_CMD = "xdg-open '%s'";
+/* if true, immediately play the highlighted video when switching from thumbnail view to image view */
+static const bool PLAY_FROM_THUMB = true;
 
 #endif
 #ifdef _MAPPINGS_CONFIG
+
+/* if true, pressing the quit key while in image mode first sends you back to thumbnail mode,
+ * where pressing quit again actually quits the program
+ */
+static const bool QUIT_TO_THUMBS = true;
 
 /* keyboard mappings for image and thumbnail mode: */
 static const keymap_t keys[] = {
@@ -87,7 +98,7 @@ static const keymap_t keys[] = {
 	{ 0,            XK_Return,        g_switch_mode,        None },
 	{ 0,            XK_f,             g_toggle_fullscreen,  None },
 	{ 0,            XK_b,             g_toggle_bar,         None },
-	{ ControlMask,  XK_x,             g_prefix_external,    None },
+	{ 0,            XK_x,             g_prefix_external,    None },
 	{ 0,            XK_g,             g_first,              None },
 	{ 0,            XK_G,             g_n_or_last,          None },
 	{ 0,            XK_r,             g_reload_image,       None },
